@@ -21,8 +21,8 @@ var net = require('net');
 var stream = require('stream');
 
 var patterns = {
-    processAll: /(\s|-)([0-9\.]+)\s([A-Z0-9\_]+)\s([^:]+)\:\s([^\n]+)/g,
-    process: /(\s|-)([0-9\.]+)\s([A-Z0-9\_]+)\s([^:]+)\:\s([^\s]+)/,
+    processAll: /(\s|-)([0-9\.]+)\s([A-Z0-9\_]+)\s([^:]+)(\:)?\s([^\n]+)/g,
+    process: /(\s|-)([0-9\.]+)\s([A-Z0-9\_]+)\s([^:]+)(\:)?\s(.+)/,
     // A fix proposed by hassansin @ https://github.com/Flolagale/spamc/commit/cf719a3436e57ff4d799eac1e58b06ab2260fbb1
     responseHead: /SPAMD\/([0-9\.\-]+)\s([0-9]+)\s([0-9A-Z_]+)/,
     response: /Spam:\s(True|False|Yes|No)\s;\s([0-9\.]+)\s\/\s([0-9\.]+)/
@@ -69,7 +69,7 @@ var spamc = function (host, port, timeout) {
             // Execute Command & Return Stream
             exec.apply(PassThroughStream, [command, headers, function (error, data) {
                 if(error) return callback(error);
-                var response = processResponse(processAs || command, data);
+                var response = self._processResponse(processAs || command, data);
                 // Return if Tell error occurred
                 if ((response) && (response[1]) && (response[1].responseCode == 69)) {
                     if(callback) callback(new Error('TELL commands are not enabled, set the --allow-tell switch.'));
@@ -227,7 +227,7 @@ var spamc = function (host, port, timeout) {
      * Param: lines {array[string]}
      * Return: [{Error}, {Object}]
      */
-    var processResponse = function (cmd, lines) {
+    this._processResponse = function (cmd, lines) {
         var returnObj = {};
         if(!lines[0]) return ["Could not match response", null];
         var result = lines[0].match(patterns.responseHead);
@@ -275,7 +275,7 @@ var spamc = function (host, port, timeout) {
                             score: matches[2],
                             name: matches[3],
                             description: matches[4].replace(/^\s*([\S\s]*)\b\s*$/, '$1'),
-                            type: matches[5]
+                            type: matches[matches.length -1]
                         };
                     }
                 }
