@@ -2,7 +2,7 @@ var chai = require("chai");
 var inspect = require("util").inspect;
 var fs = require('fs');
 var Spamc = require("./index");
-var TestData = require('./sample-test-data');
+var TestData = require('./samples/test-responses');
 
 var should = chai.should();
 var expect = chai.expect;
@@ -26,6 +26,7 @@ describe('Test Suite', function() {
 			done();
 		})
 	})
+
 	it('should work as a PassThrough stream', function(done) {
 		var reporter = client.report();
 		EASYSPAM.pipe(reporter);
@@ -117,6 +118,17 @@ describe('Parsing test', function () {
 
     expect(response.report.length).to.equal(6);
 		expect(response.report.some(r => r.score == 0.0 && r.name == "RCVD_IN_DNSWL_NONE" && r.description == "RBL: Sender listed at http://www.dnswl.org/, no trust [0.0.0.0 listed in list.dnswl.org]")).to.equal(true);
+    done();
+  })
+
+	it('should process Response3', function(done) {
+		var rawLines =  TestData.Response3();
+
+		var response = client._processResponse('REPORT', rawLines)[1];
+
+    expect(response.report.length).to.equal(5);
+		var rule = response.report[0];
+		expect(rule.score == 0.0 && rule.name == 'URIBL_BLOCKED').to.equal(true);
     done();
   })
 })

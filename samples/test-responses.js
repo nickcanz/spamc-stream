@@ -68,3 +68,38 @@ Content analysis details:   (5.0 points, 5.0 required)
 
 `];
 };
+
+
+exports.Response3 = function () {
+
+  return [ 'SPAMD/1.1 0 EX_OK',
+  		'Content-length: 1162',
+  		'Spam: True ; 0.1 / 5.0',
+			`Spam detection software, running on the system "74d7f9d71592",
+has NOT identified this incoming email as spam.  The original
+message has been attached to this so you can view it or label
+similar future email.  If you have any questions, see
+the administrator of that system for details.
+
+Content preview:  Hello User, We\'ve spotted an incident with the
+   repository in your example account. THE ISSUE: [...] 
+
+Content analysis details:   (0.1 points, 5.0 required)
+
+ pts rule name              description
+---- ---------------------- --------------------------------------------------
+ 0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was blocked.
+                            See
+                            http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                             for more information.
+                            [URIs: eample.com]
+-0.0 RCVD_IN_MSPIKE_H3      RBL: Good reputation (+3)
+                            [0.0.0.0 listed in wl.mailspike.net]
+ 0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily valid
+-0.0 RCVD_IN_MSPIKE_WL      Mailspike good senders
+ 0.0 T_DKIM_INVALID         DKIM-Signature header exists but is not valid
+
+`];
+
+
+};

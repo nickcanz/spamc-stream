@@ -21,8 +21,8 @@ var net = require('net');
 var stream = require('stream');
 
 var patterns = {
-    processAll: /(?:\s?)(-?[0-9\.]+)\s([A-Z0-9\_]+)\s((?:(?:[^\n]+))(?:(?:\s{3,50}(?:[^\n]+))+))/g,
-    process: /(?:\s?)(-?[0-9\.]+)\s([A-Z0-9\_]+)\s((?:(?:[^\n]+))(?:(?:\s{3,50}(?:[^\n]+))*))/,
+    processAll: /(?:\s?)(-?[0-9]+\.[0-9]+)\s([A-Z0-9\_]+)\s((?:(?:[^\n]+))(?:(?:\s{3,50}(?:[^\n]+))+))/g,
+    process: /(?:\s?)(-?[0-9]+\.[0-9]+)\s([A-Z0-9\_]+)\s((?:(?:[^\n]+))(?:(?:\s{3,50}(?:[^\n]+))*))/,
     // A fix proposed by hassansin @ https://github.com/Flolagale/spamc/commit/cf719a3436e57ff4d799eac1e58b06ab2260fbb1
     responseHead: /SPAMD\/([0-9\.\-]+)\s([0-9]+)\s([0-9A-Z_]+)/,
     response: /Spam:\s(True|False|Yes|No)\s;\s([0-9\.]+)\s\/\s([0-9\.]+)/
