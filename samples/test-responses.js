@@ -101,3 +101,31 @@ Content analysis details:   (0.1 points, 5.0 required)
 
 `];
 };
+
+exports.Response4 = function () {
+	return [ 'SPAMD/1.1 0 EX_OK',
+  	'Content-length: 1817',
+  	'Spam: True ; 13.0 / 5.0',
+`  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was blocked.
+                            See
+                            http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                             for more information.
+                            [URIs: wwwg.trade]
+ 1.6 SUBJ_ALL_CAPS          Subject is all capitals
+ 1.9 URIBL_ABUSE_SURBL      Contains an URL listed in the ABUSE SURBL blocklist
+                            [URIs: wwwg.trade]
+ 0.8 HTML_IMAGE_RATIO_02    BODY: HTML has a low ratio of text to image area
+ 1.1 MIME_HTML_ONLY         BODY: Message only has text/html MIME parts
+ 1.3 HTML_IMAGE_ONLY_24     BODY: HTML: images with 2000-2400 bytes of words
+ 0.0 HTML_MESSAGE           BODY: HTML included in message
+ 2.0 PYZOR_CHECK            Listed in Pyzor (http://pyzor.sf.net/)
+ 0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily valid
+ 0.0 T_DKIM_INVALID         DKIM-Signature header exists but is not valid
+ 0.6 HTML_MIME_NO_HTML_TAG  HTML-only message, but there is no HTML tag
+ 1.0 BODY_URI_ONLY          Message body is only a URI in one line of text or for
+                            an image
+ 2.5 BODY_SINGLE_WORD       Message body is only one word (no spaces)
+ 0.0 BODY_SINGLE_URI        Message body is only a URI
+
+`];
+};

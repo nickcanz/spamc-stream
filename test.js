@@ -135,4 +135,14 @@ describe('Parsing test', function () {
 		expect(rule.score == 0.0 && rule.name == 'URIBL_BLOCKED').to.equal(true);
     done();
   })
+
+	it('should process Response4', function(done) {
+		var rawLines =  TestData.Response4();
+
+		var response = client._processResponse('REPORT', rawLines)[1];
+
+		expect(response.spamScore).to.equal(13);
+    expect(response.report.length).to.equal(14);
+    done();
+  })
 })
