@@ -100,6 +100,8 @@ describe('Parsing test', function () {
 
 		var response = client._processResponse('REPORT', rawLines)[1];
 
+		expect(response.spamScore).to.equal(9.8);
+
     expect(response.report.length).to.equal(10);
 		expect(response.report.some(r => r.score == 0.0 && r.name == "NO_RELAYS" && r.description == "Informational: message was not relayed via SMTP")).to.equal(true);
 		expect(response.report.some(r => r.score == 2.0 && r.name == "PYZOR_CHECK")).to.equal(true);
@@ -115,6 +117,7 @@ describe('Parsing test', function () {
 		var rawLines =  TestData.Response2();
 
 		var response = client._processResponse('REPORT', rawLines)[1];
+		expect(response.spamScore).to.equal(3.2);
 
     expect(response.report.length).to.equal(6);
 		expect(response.report.some(r => r.score == 0.0 && r.name == "RCVD_IN_DNSWL_NONE" && r.description == "RBL: Sender listed at http://www.dnswl.org/, no trust [0.0.0.0 listed in list.dnswl.org]")).to.equal(true);
@@ -126,6 +129,7 @@ describe('Parsing test', function () {
 
 		var response = client._processResponse('REPORT', rawLines)[1];
 
+		expect(response.spamScore).to.equal(-0.1);
     expect(response.report.length).to.equal(5);
 		var rule = response.report[0];
 		expect(rule.score == 0.0 && rule.name == 'URIBL_BLOCKED').to.equal(true);
