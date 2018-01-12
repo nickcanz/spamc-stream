@@ -21,8 +21,8 @@ var net = require('net');
 var stream = require('stream');
 
 var patterns = {
-    processAll: /(\s|-)([0-9\.]+)\s([A-Z0-9\_]+)\s([^:]+)(\:)?\s([^\n]+)/g,
-    process: /(\s|-)([0-9\.]+)\s([A-Z0-9\_]+)\s([^:]+)(\:)?\s(.+)/,
+    processAll: /(?:\s?)(-?[0-9\.]+)\s([A-Z0-9\_]+)\s((?:(?:[^\n]+))(?:(?:\s{3,50}(?:[^\n]+))+))/g,
+    process: /(?:\s?)(-?[0-9\.]+)\s([A-Z0-9\_]+)\s((?:(?:[^\n]+))(?:(?:\s{3,50}(?:[^\n]+))*))/,
     // A fix proposed by hassansin @ https://github.com/Flolagale/spamc/commit/cf719a3436e57ff4d799eac1e58b06ab2260fbb1
     responseHead: /SPAMD\/([0-9\.\-]+)\s([0-9]+)\s([0-9A-Z_]+)/,
     response: /Spam:\s(True|False|Yes|No)\s;\s([0-9\.]+)\s\/\s([0-9\.]+)/
@@ -265,17 +265,16 @@ var spamc = function (host, port, timeout) {
                     returnObj.report = [];
                     for (var ii = 0; ii < result.length; ii++) {
                         /* Remove New Line if Found */
-                        result[ii] = result[ii].replace(/\n([\s]*)/, ' ');
+                        result[ii] = result[ii].replace(/\n([\s]*)/g, ' ');
                         /* Match Sections */
                         var matches = result[ii].match(patterns.process);
                         // Fixes a throw when Match fails
                         if(!matches) return [new Error("Could Not Match Response")];
                         
                         returnObj.report[returnObj.report.length] = {
-                            score: matches[2],
-                            name: matches[3],
-                            description: matches[4].replace(/^\s*([\S\s]*)\b\s*$/, '$1'),
-                            type: matches[matches.length -1]
+                            score: matches[1],
+                            name: matches[2],
+                            description: matches[3].replace(/^\s*/, ''),
                         };
                     }
                 }
