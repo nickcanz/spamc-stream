@@ -227,7 +227,12 @@ var spamc = function (host, port, timeout) {
      * Param: lines {array[string]}
      * Return: [{Error}, {Object}]
      */
-    this._processResponse = function (cmd, lines) {
+    this._processResponse = function (cmd, rawLines) {
+        var lines = rawLines;
+        if (rawLines.length > 4) {
+          [ head, content, spam, ...body ] = rawLines;
+          lines = [head, content, spam, body.join('')];
+        }
         var returnObj = {};
         if(!lines[0]) return ["Could not match response", null];
         var result = lines[0].match(patterns.responseHead);
