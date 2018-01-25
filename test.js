@@ -26,7 +26,6 @@ describe('Test Suite', function() {
 			done();
 		})
 	})
-
 	it('should work as a PassThrough stream', function(done) {
 		var reporter = client.report();
 		EASYSPAM.pipe(reporter);
@@ -145,4 +144,14 @@ describe('Parsing test', function () {
     expect(response.report.length).to.equal(14);
     done();
   })
+
+	it('should process Response5', function(done) {
+		var rawLines =  TestData.Response5();
+
+		var response = client._processResponse('REPORT', rawLines)[1];
+
+		expect(response.spamScore).to.equal(0.6);
+    expect(response.report.length).to.equal(8);
+    done();
+	})
 })

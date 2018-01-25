@@ -255,15 +255,7 @@ var spamc = function (host, port, timeout) {
                 returnObj.spamScore = parseFloat(result[2]);
                 returnObj.baseSpamScore = parseFloat(result[3]);
             }
-            if (result == null) {
-                result = lines[i].match(/([A-Z0-9\_]+)\,/g);
-                if (result != null) {
-                    returnObj.matches = [];
-                    for (var ii = 0; ii < result.length; ii++) {
-                        returnObj.matches[ii] = result[ii].substring(0, result[ii].length - 1);
-                    }
-                }
-            }
+
             if (result == null && cmd != 'PROCESS') {
                 result = lines[i].match(patterns.processAll);
                 if (result != null) {

@@ -129,3 +129,40 @@ exports.Response4 = function () {
 
 `];
 };
+
+exports.Response5 = function () {
+return ['SPAMD/1.1 0 EX_OK',
+  'Content-length: 1650',
+  'Spam: False ; 0.6 / 5.0',
+	`Spam detection software, running on the system "727eb4ff13ce",
+has NOT identified this incoming email as spam.  The original
+message has been attached to this so you can view it or label
+similar future email.  If you have any questions, see
+the administrator of that system for details.
+
+Content preview:  View this email in your browser ** Several Openings in our
+   Tuesday night Shaker Class!! New Shaker Table Class beginning Tuesday night
+   5:30-8:30, February 13, 2018. This Class lasts 4 weeks ( 1 night/week) $350
+   includes wood and shop time Go home with a finished piece of furniture! [...]
+   
+
+Content analysis details:   (0.6 points, 5.0 required)
+
+ pts rule name              description
+---- ---------------------- --------------------------------------------------
+ 0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was blocked.
+                            See
+                            http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                             for more information.
+                            [URIs: mailchimp.com]
+-0.0 RCVD_IN_MSPIKE_H3      RBL: Good reputation (+3)
+                            [205.201.133.195 listed in wl.mailspike.net]
+ 0.0 HTML_MESSAGE           BODY: HTML included in message
+ 0.6 HTML_IMAGE_RATIO_04    BODY: HTML has a low ratio of text to image area
+ 0.0 MIME_QP_LONG_LINE      RAW: Quoted-printable line longer than 76 chars
+ 0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily valid
+-0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+-0.0 RCVD_IN_MSPIKE_WL      Mailspike good senders
+
+`];
+};
